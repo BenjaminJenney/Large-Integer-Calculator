@@ -24,12 +24,12 @@ class LinkedList
 private:
 	node<T> * first;
 	node<T> * tail;
-	int size;
+	int size = 0;
 public:
 	LinkedList();
 	LinkedList(const LinkedList&);
 	void copy(const LinkedList&);
-	void operator=(const LinkedList&);
+	//void operator=(const LinkedList&);
 	//void insert_end(T dat);
 	void pushBack(T data);
 	void pushFront(T data);
@@ -58,7 +58,7 @@ public:
 		~Iterator() {}
 	};
 	Iterator begin() { return Iterator(first); }
-	Iterator end() { return Iterator(tail->next); }
+	Iterator end() { return Iterator(tail); }
 	~LinkedList();
 };
 
@@ -116,6 +116,7 @@ LinkedList<T>::LinkedList()
 {
 	first = nullptr;
 	tail = nullptr;
+	size = 0;
 }
 
 template<class T>
@@ -133,48 +134,21 @@ LinkedList<T>::LinkedList(const LinkedList& other)
 	}
 }
 
-template<class T>
-void LinkedList<T>::operator=(const LinkedList& other)
-{
-	/*----------------The idea behined the commented code is to replace values that already have address with others data
-	which is more efficient than deleteing all of this's list, and then copying values.
-	unfortunately it is still buggy, but will fix it soon.---------------------*/
-
-		node<T> *thisPtr = first;
-		/*if (first != nullptr)
-		{
-			node<T> *otherPtr = l1.first;
-			
-			node<T> *prev = nullptr;
-			while (otherPtr != nullptr && thisPtr != nullptr)
-			{
-				std::cout << "ive been called";
-				thisPtr->prev = prev;
-				thisPtr->data = otherPtr->data;
-				prev = thisPtr;
-				thisPtr = thisPtr->next;
-				otherPtr = otherPtr->next;
-			}*/
-		while (thisPtr != nullptr)
-		{
-			node<T> *Tmp = thisPtr;
-			thisPtr = thisPtr->next;
-			delete Tmp;
-
-		}
-		//else if (first != nullptr && l1.first == nullptr)
-		//{
-		//	node<T> *tmp = first;
-
-		//	while (tmp != nullptr)
-		//	{
-		//		//tmp = first; 
-		//		first = first->next;
-		//		delete tmp;
-		//	}
-		//}
-		copy(other);
-}
+//template<class T>
+//void LinkedList<T>::operator=(const LinkedList& other)
+//{
+//		node<T> *thisPtr = first;
+//
+//		while (thisPtr != nullptr)
+//		{
+//			node<T> *Tmp = thisPtr;
+//			thisPtr = thisPtr->next;
+//			delete Tmp;
+//
+//		}
+//
+//		copy(other);
+//}
 
 template<class T>
 void LinkedList<T>::copy(const LinkedList& other)
